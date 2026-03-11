@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>samatxi Links</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" crossorigin="anonymous">
+
+<style>
+/* --- Body & Background --- */
+body {
+  background:#000; /* Start black */
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:40px 20px;
+  min-height:100vh;
+  cursor:pointer;
+  overflow-x:hidden;
+  font-family:'Karla', sans-serif;
+  opacity:0;
+  animation: fadeInBody 1.5s forwards;
+}
+
+@keyframes fadeInBody { from {opacity:0;} to {opacity:1;} }
+
+#bg-overlay {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background:#000;
+  z-index:2;
+  opacity:1;
+  pointer-events:none;
+  animation: fadeOverlay 2s forwards;
+}
+
+@keyframes fadeOverlay { from {opacity:1;} to {opacity:0;} }
+
+#bg-video {
+  position: fixed; 
+  top:0; 
+  left:0; 
+  width:100vw; 
+  height:100vh; 
+  object-fit: cover; 
+  z-index:-1; 
+  pointer-events:none; 
+  opacity:0; 
+  animation: fadeInBg 2s forwards;
+}
+@keyframes fadeInBg { from {opacity:0;} to {opacity:1;} }
+
+/* --- Header --- */
+.container-info{ 
+  display:flex; 
+  flex-direction:column; 
+  align-items:center; 
+  justify-content:center; 
+  opacity:0; 
+  animation: fadeInElements 1s forwards; 
+  animation-delay:2s;
+}
+@keyframes fadeInElements { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform: translateY(0);} }
+
+.container-info__img{ width:120px; height:120px; border-radius:50%; margin-bottom:15px; object-fit:cover; }
+
+.container-info__name { display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:nowrap; font-size:1.8em; font-weight:700;}
+.container-info__name span { display:inline-block; background: linear-gradient(90deg, #ff7fff, #8e2de2, #4a00e0, #8e2de2, #ff7fff); background-size: 300% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: smoothSlide 2s linear infinite; text-shadow:0 0 5px rgba(255,127,255,0.4), 0 0 8px rgba(142,45,226,0.3), 0 0 12px rgba(74,0,224,0.2);}
+@keyframes smoothSlide { 0% { background-position:300% 50%; } 100% { background-position:0% 50%; } }
+
+#typing-text { margin-top:10px; font-size:14px; text-align:center; text-shadow:0 0 2px #fff,0 0 4px #fff; white-space:pre; overflow:hidden; border-right: 2px solid #fff; width:auto; }
+
+/* --- Buttons --- */
+.container-cards{ margin-top:40px; display:flex; flex-direction:column; gap:15px; width:100%; max-width:400px; align-items:center; }
+.container-card{ display:flex; align-items:center; justify-content:flex-start; gap:10px; width:80%; height:60px; background-color: rgba(0,0,0,0.2); border-radius:30px; text-decoration:none; color:#fff; border:2px solid rgba(255,255,255,0.2); overflow:hidden; font-weight:500; padding:0 20px; position:relative; opacity:0; transition:0.3s; cursor:pointer;}
+.container-card i{ font-size:22px; text-shadow:0 0 2px #fff,0 0 4px #fff; position: absolute; left:50%; transform: translateX(-50%); opacity:0; transition:0.5s;}
+.container-card__name { font-size:16px; text-shadow:0 0 2px #fff,0 0 4px #fff; opacity:0; position:absolute; left:50%; transform: translateX(-50%); transition:0.5s; }
+
+.container-card:hover{
+  background-color: rgba(142,45,226,0.1);
+  box-shadow: 0 0 2px #8e2de2, 0 0 4px #8e2de2;
+  border-color: #8e2de2;
+}
+.container-card:hover i,
+.container-card:hover .container-card__name{
+  text-shadow: 0 0 2px #fff, 0 0 4px #fff;
+  font-size:15px;
+}
+
+@keyframes slideFromLeft { from { transform: translateX(-150%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+@keyframes slideFromRight { from { transform: translateX(150%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+@keyframes iconMove { from { left:50%; opacity:0; transform:translateX(-50%);} to { left:20px; opacity:1; transform:translateX(0);} }
+@keyframes textAppear { from { opacity:0; left:50%; transform:translateX(-50%);} to { opacity:1; left:50%; transform:translateX(-50%);} }
+
+.container-card:nth-child(1){ animation: slideFromLeft 1.2s forwards; animation-delay:2.5s; }
+.container-card:nth-child(2){ animation: slideFromRight 1.2s forwards; animation-delay:2.8s; }
+.container-card:nth-child(3){ animation: slideFromLeft 1.2s forwards; animation-delay:3.1s; }
+.container-card:nth-child(4){ animation: slideFromRight 1.2s forwards; animation-delay:3.4s; }
+
+.container-card:nth-child(1) i{ animation: iconMove 1s forwards; animation-delay:2.8s; }
+.container-card:nth-child(2) i{ animation: iconMove 1s forwards; animation-delay:3.1s; }
+.container-card:nth-child(3) i{ animation: iconMove 1s forwards; animation-delay:3.4s; }
+.container-card:nth-child(4) i{ animation: iconMove 1s forwards; animation-delay:3.7s; }
+
+.container-card:nth-child(1) .container-card__name{ animation:textAppear 1s forwards; animation-delay:3.1s;}
+.container-card:nth-child(2) .container-card__name{ animation:textAppear 1s forwards; animation-delay:3.4s;}
+.container-card:nth-child(3) .container-card__name{ animation:textAppear 1s forwards; animation-delay:3.7s;}
+.container-card:nth-child(4) .container-card__name{ animation:textAppear 1s forwards; animation-delay:4s;}
+
+.footer{ margin-top:50px; font-size:12px; color:#aaa; text-align:center; opacity:0; animation: fadeInElements 1s forwards; animation-delay:4.5s;}
+.footer a{ color:#fff; text-decoration:none; }
+.footer a:hover{ color:#8e2de2; }
+
+</style>
+</head>
+<body>
+
+<!-- Black overlay for initial load -->
+<div id="bg-overlay"></div>
+
+<video autoplay muted loop playsinline webkit-playsinline id="bg-video">
+  <source src="bg.mp4" type="video/mp4">
+</video>
+
+<div class="container-info">
+  <img src="pic.png" alt="Frenzyyy" class="container-info__img">
+  <div class="container-info__name">
+    <span>𝑭</span><span>𝙧</span><span>𝙚</span><span>𝙣</span><span>𝙯</span><span>𝙮</span><span>𝙮</span><span>𝙮</span><span>｡</span><span>*</span><span>◌</span><span>⁺</span><span>･</span>
+    <i class="fas fa-check-circle" style="font-size:18px;color:#01b0df;margin-left:5px;"></i>
+  </div>
+  <p id="typing-text"></p>
+</div>
+
+<div class="container-cards">
+  <a class="container-card" href="https://www.instagram.com/svm_ven?igsh=MXBzaWJ5MTJzMGgydg%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-discord"></i><p class="container-card__name">Discord</p></a>
+  <a class="container-card" href="https://discord.gg/XAZVUtuX" target="_blank"><i class="fab fa-discord"></i><p class="container-card__name">Telegram</p></a>
+  <a class="container-card" href="https://snapchat.com/t/ex4d83iy" target="_blank"><i class="fab fa-snapchat"></i><p class="container-card__name">GitHub</p></a>
+  <a class="container-card" href="https://www.tiktok.com/@samatxi.0?_r=1&_t=ZS-94bmPnOgoOW" target="_blank"><i class="fab fa-tiktok"></i><p class="container-card__name">TikTok</p></a>
+</div>
+
+<div class="footer">&copy; 2025 <a href="https://github.com/frenzyyy12" target="_blank">Frenzyyy</a>. All rights reserved.</div>
+
+<audio id="bg-music" src="music.mp3" loop></audio>
+
+<script>
+const music = document.getElementById("bg-music");
+const typingText = document.getElementById('typing-text');
+const text = "Tap anywhere to play music & explore";
+let index = 0;
+
+function type() {
+    if(index < text.length){
+        typingText.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, 80);
+    }
+}
+
+// Start typing after buttons appear
+window.addEventListener('load', () => {
+    setTimeout(type, 4100);
+});
+
+// Play music on first click anywhere
+document.body.addEventListener("click", () => {
+    music.play().catch(()=>{console.log("User interaction required")});
+}, {once:true});
+</script>
+
+</body>
+</html>
+
