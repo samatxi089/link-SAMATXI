@@ -7,6 +7,54 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" crossorigin="anonymous">
 
 <style>
+/* --- SPLASH SCREEN (INTRO) --- */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Dima l-foq */
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+.splash-logo {
+  font-family: 'Karla', sans-serif;
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.8), 0 0 40px rgba(168, 85, 247, 0.4);
+  animation: logoPulse 2s infinite;
+}
+
+.splash-loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #a855f7;
+  border-radius: 50%;
+  margin-top: 20px;
+  animation: loaderSpin 1s linear infinite;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+}
+
+@keyframes logoPulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes loaderSpin {
+  to { transform: rotate(360deg); }
+}
+
 /* --- Body & Background --- */
 body {
   background:#000;
@@ -20,6 +68,12 @@ body {
   cursor:pointer;
   overflow-x:hidden;
   font-family:'Karla', sans-serif;
+  opacity: 0; /* Khbi f l-bedya */
+  transition: opacity 1.5s ease;
+}
+
+body.loaded {
+  opacity: 1; /* Ban fach i-sali splash */
 }
 
 #bg-video {
@@ -41,7 +95,6 @@ body {
     font-size: 12px;
     letter-spacing: 1px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    animation: fadeIn 1s ease-out forwards;
 }
 .status-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block; margin-right: 5px; box-shadow: 0 0 8px #22c55e; animation: pulse 2s infinite; }
 @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
@@ -80,12 +133,15 @@ body {
 
 .container-card i { position: absolute; left: 25px; font-size: 20px; color: #a855f7; }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
 #typing-text { color: #d8b4fe; font-size: 13px; margin-top: 5px; height: 15px; }
 </style>
 </head>
 <body>
+
+<div id="splash-screen">
+  <div class="splash-logo">SAMATXI</div>
+  <div class="splash-loader"></div>
+</div>
 
 <video autoplay muted loop playsinline id="bg-video">
   <source src="background.mp4" type="video/mp4">
@@ -114,13 +170,24 @@ body {
 <audio id="bg-music" src="music.mp3" loop></audio>
 
 <script>
+// --- SPLASH SCREEN JAVASCRIPT ---
+window.addEventListener('load', () => {
+    const splash = document.getElementById('splash-screen');
+    // Tsennay 2 dqiqa derya (Splash time)
+    setTimeout(() => {
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+        document.body.classList.add('loaded'); // Ban l-body
+        setTimeout(type, 1000); // Bda t-typing ba3d 1s
+    }, 2000); // 2000ms = 2s
+});
+
 // Music & Typing
 const music = document.getElementById("bg-music");
 const typingText = document.getElementById('typing-text');
 const text = "Tap anywhere to play music...";
 let idx = 0;
 function type() { if(idx < text.length){ typingText.textContent += text.charAt(idx); idx++; setTimeout(type, 70); } }
-window.addEventListener('load', type);
 document.body.addEventListener("click", () => { music.play().catch(()=>{}); }, {once:true});
 
 // Clock Widget
